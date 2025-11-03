@@ -1,0 +1,8 @@
+# Dependencies
+/node_modules
+
+# Environment variables
+.env
+
+# Uploads (optional, but good practice if you don't want to version test uploads)
+/uploads
