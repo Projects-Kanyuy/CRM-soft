@@ -15,8 +15,8 @@ const taskRoutes = require('./routes/taskRoutes');
 const userRoutes = require('./routes/userRoutes');
 const notificationRoutes = require('./routes/notificationRoutes');
 const emailRoutes = require('./routes/emailRoutes');
-const contactFileRoutes = require('./routes/fileRoutes'); // Renamed for clarity
-const organizationFileRoutes = require('./routes/organizationFileRoutes'); // New import
+const contactFileRoutes = require('./routes/fileRoutes');
+const organizationFileRoutes = require('./routes/organizationFileRoutes');
 
 dotenv.config();
 connectDB();

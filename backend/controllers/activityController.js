@@ -1,6 +1,6 @@
 const Activity = require('../models/Activity');
 const Contact = require('../models/Contact');
-
+const asyncHandler = require('express-async-handler');
 // @desc    Get all activities for a specific contact
 // @route   GET /api/contacts/:contactId/activities
 // @access  Private
@@ -18,52 +18,6 @@ const getActivitiesForContact = async (req, res) => {
     res.status(500).json({ message: 'Server Error', error: error.message });
   }
 };
-
-// @desc    Create a new activity for a contact
-// @route   POST /api/contacts/:contactId/activities
-// @access  Private
-const createActivity = async (req, res) => {
-  const { kind, subject, body, scheduledAt, dealId } = req.body;
-
-  try {
-    const contact = await Contact.findById(req.params.contactId);
-    if (!contact || contact.ownerId.toString() !== req.user.id) {
-      return res.status(404).json({ message: 'Contact not found or not authorized' });
-    }
-
-    const activity = new Activity({
-      kind,
-      subject,
-      body,
-      scheduledAt,
-      dealId,
-      userId: req.user.id,
-      contactId: req.params.contactId,
-    });
-
-    const createdActivity = await activity.save();
-    res.status(201).json(createdActivity);
-  } catch (error) {
-    res.status(500).json({ message: 'Server Error', error: error.message });
-  }
-};
-// @route   GET /api/tasks
-// @access  Private
-const getUserTasks = async (req, res) => {
-  try {
-    const tasks = await Activity.find({ 
-      userId: req.user.id,
-      kind: 'Task' 
-    })
-    .populate('contactId', 'firstName lastName')
-    .sort({ dueDate: 1 }); // Sort by due date, upcoming first
-
-    res.status(200).json(tasks);
-  } catch (error) {
-    res.status(500).json({ message: 'Server Error', error: error.message });
-  }
-};
-
 // @desc    Update a task's status
 // @route   PUT /api/tasks/:id
 // @access  Private
@@ -93,6 +47,46 @@ const updateTaskStatus = async (req, res) => {
     res.status(500).json({ message: 'Server Error', error: error.message });
   }
 };
+const createActivity = asyncHandler(async (req, res) => {
+  const { kind, subject, body, scheduledAt, dueDate, dealId, assignedTo } = req.body;
 
+  const contact = await Contact.findById(req.params.contactId);
+  if (!contact || (contact.ownerId.toString() !== req.user.id && req.user.role !== 'Admin')) {
+    res.status(404); throw new Error('Contact not found or not authorized');
+  }
 
-module.exports = { getActivitiesForContact, createActivity, getUserTasks, updateTaskStatus };
+  const activity = new Activity({
+    kind, subject, body, scheduledAt, dueDate, dealId,
+    userId: req.user.id, // The creator
+    contactId: req.params.contactId,
+    assignedTo: assignedTo || req.user.id, // <-- Default to creator if not assigned
+  });
+
+  const createdActivity = await activity.save();
+  res.status(201).json(createdActivity);
+});
+
+// MODIFIED: Now fetches tasks ASSIGNED TO the user
+const getUserTasks = asyncHandler(async (req, res) => {
+  const tasks = await Activity.find({ 
+    assignedTo: req.user.id, // <-- CRITICAL CHANGE
+    kind: 'Task' 
+  })
+  .populate('contactId', 'firstName lastName')
+  .sort({ dueDate: 1 });
+  res.status(200).json(tasks);
+});
+
+// ... (updateTaskStatus remains the same)
+
+// NEW FUNCTION for Admins
+const getAllTasks = asyncHandler(async (req, res) => {
+    const tasks = await Activity.find({ kind: 'Task' })
+        .populate('contactId', 'firstName lastName')
+        .populate('userId', 'name') // Get creator's name
+        .populate('assignedTo', 'name') // Get assignee's name
+        .sort({ dueDate: 1 });
+    res.status(200).json(tasks);
+});
+
+module.exports = { getActivitiesForContact, getAllTasks, createActivity, getUserTasks, updateTaskStatus };
