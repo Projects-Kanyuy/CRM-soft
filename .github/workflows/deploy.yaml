@@ -31,6 +31,7 @@ jobs:
       - name: Detect changed folders
         id: detect
         run: |
+          git fetch origin main
           CHANGES=$(git diff --name-only origin/main...HEAD)
 
           echo "Changed files:"
@@ -89,7 +90,7 @@ jobs:
             echo "Removing stale lock: $LOCK_OBJECT"
             aws s3 rm s3://kanyuy-mern-2025/crm-soft/$LOCK_OBJECT
           fi
-          terraform init -reconfigure
+          terraform init
 
       - name: Terraform Apply (only if infra changed)
         if: needs.changes.outputs.terraform == 'true'
@@ -169,7 +170,7 @@ jobs:
           aws ecs update-service --cluster "$CLUSTER" --service "$SERVICE" --task-definition "$NEW_ARN" --force-new-deployment
 
   deploy-frontend:
-    needs: [changes, infrastructure]
+    needs: [changes, deploy-ecs]
     if: needs.changes.outputs.frontend == 'true'
     runs-on: ubuntu-latest
     env:
