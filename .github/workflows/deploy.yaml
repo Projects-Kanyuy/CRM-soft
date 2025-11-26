@@ -92,7 +92,7 @@ jobs:
           fi
           terraform init
 
-      - name: Terraform Apply (only if infra changed)
+      - name: Terraform Apply (only if infrastructure changed)
         if: needs.changes.outputs.terraform == 'true'
         working-directory: terraform
         run: |
