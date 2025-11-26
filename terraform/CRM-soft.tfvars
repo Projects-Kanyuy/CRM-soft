@@ -1,0 +1,8 @@
+aws_region   = "us-east-1"
+bucket_name  = "crm-soft-2025"
+environment  = "production"
+project_name = "crm-soft"
+ecr_repository_name = "crm-soft-repo"
+secrets_arn = "arn:aws:secretsmanager:us-east-1:362954627441:secret:crm-soft-secret-7KStxT"
+acm_certificate_arn = "arn:aws:acm:us-east-1:362954627441:certificate/19f8f5a0-5e05-4893-b054-2e9c7396981d"
+custom_domain = "beautyhope.site"
