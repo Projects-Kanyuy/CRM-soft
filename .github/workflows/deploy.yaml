@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - main
+    paths:
+      - '.github/workflows/**'    
+      - 'terraform/**'
+      - 'backend/**'
+      - 'frontend/**'
 
 permissions:
   id-token: write
