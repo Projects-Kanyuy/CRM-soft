@@ -99,7 +99,7 @@ npm install
 Create a file named `.env` in `/backend`:
 
 ```
-PORT=5000
+PORT=5001
 DATABASE_URL=your_database_connection_string_here
 JWT_SECRET=your_jwt_secret_here
 PORT=5001
@@ -130,7 +130,7 @@ npm run dev
 Backend will typically run on:
 
 ```
-http://localhost:5000
+http://localhost:5001
 ```
 
 ---
@@ -168,7 +168,7 @@ http://localhost:3000
 If the frontend needs API access, create a `.env` inside `frontend/`:
 
 ```
-REACT_APP_API_URL=http://localhost:5000
+REACT_APP_API_URL=http://localhost:5001
 ```
 
 (Or adjust based on your framework.)
