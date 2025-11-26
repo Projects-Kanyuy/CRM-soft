@@ -7,4 +7,3 @@ output "cloudfront_distribution_id" { value = aws_cloudfront_distribution.cdn.id
 output "backend_url" { value = "https://api.${var.custom_domain}" }
 output "ecr_repo_url" { value = aws_ecr_repository.backend.repository_url }
 output "custom_domain" { value = "https://${var.custom_domain}" }
-##

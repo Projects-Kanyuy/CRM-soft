@@ -14,32 +14,27 @@ env:
   TF_IN_AUTOMATION: true
 
 jobs:
-  # ──────────────────────────────
-  # 1. Detect what changed
-  # ──────────────────────────────
   changes:
     runs-on: ubuntu-latest
     outputs:
-      terraform: ${{ steps.detect.outputs.terraform }}
-      backend: ${{ steps.detect.outputs.backend }}
-      frontend: ${{ steps.detect.outputs.frontend }}
+      terraform: ${{ steps.filter.outputs.terraform }}
+      backend: ${{ steps.filter.outputs.backend }}
+      frontend: ${{ steps.filter.outputs.frontend }}
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Detect changed folders
-        id: detect
-        run: |
-          git fetch origin main
-          CHANGES=$(git diff --name-only origin/main...HEAD)
-
-          echo "Changed files:"
-          echo "$CHANGES"
-
-          echo "terraform=$(echo "$CHANGES" | grep -q "^terraform/" && echo true || echo false)" >> $GITHUB_OUTPUT
-          echo "backend=$(echo "$CHANGES" | grep -q "^backend/" && echo true || echo false)" >> $GITHUB_OUTPUT
-          echo "frontend=$(echo "$CHANGES" | grep -q "^frontend/" && echo true || echo false)" >> $GITHUB_OUTPUT
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            terraform:
+              - added|modified: 'terraform/**'
+            backend:
+              - added|modified: 'backend/**'
+            frontend:
+              - added|modified: 'frontend/**'
 
   infrastructure:
     needs: changes
