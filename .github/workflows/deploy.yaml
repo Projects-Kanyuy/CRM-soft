@@ -170,7 +170,7 @@ jobs:
           aws ecs update-service --cluster "$CLUSTER" --service "$SERVICE" --task-definition "$NEW_ARN" --force-new-deployment
 
   deploy-frontend:
-    needs: [changes, deploy-ecs]
+    needs: [changes, infrastructure]
     if: needs.changes.outputs.frontend == 'true'
     runs-on: ubuntu-latest
     env:

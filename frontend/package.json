@@ -55,4 +55,4 @@
     "tailwindcss": "^3.4.17"
   }
 }
-###
+### The file above is frontend/package.json
