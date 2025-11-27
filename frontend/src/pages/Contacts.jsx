@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react'; // Import useCallback
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import api from '../api';
-import { PlusIcon, PencilSquareIcon, TrashIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { PlusIcon, PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline';
 import Modal from '../components/Modal';
 import ContactForm from '../components/ContactForm';
 import FilterSidebar from '../components/FilterSidebar'; // <-- Import the new sidebar
@@ -13,7 +13,7 @@ export default function Contacts() {
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingContact, setEditingContact] = useState(null);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm] = useState('');
   const [isSaving, setIsSaving] = useState(false);
   const [selectedOrg, setSelectedOrg] = useState(null); // <-- State for the selected filter
    const [isImportModalOpen, setIsImportModalOpen] = useState(false);
