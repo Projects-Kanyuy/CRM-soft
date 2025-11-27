@@ -6,7 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "data:import": "node utils/seeder",
     "data:destroy": "node utils/seeder -d",
-    "start": "node server",
+    "start": "node api.js && node server",
     "server": "nodemon server.js"
   },
   "keywords": [],

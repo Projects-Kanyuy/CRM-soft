@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../api';
-import toast from 'react-hot-toast';
-import { CheckCircleIcon } from '@heroicons/react/24/solid';
-import { CircleIcon } from '@heroicons/react/24/outline'; // This icon doesn't exist, we'll use a div instead
+import toast from 'react-hot-toast'; // This icon doesn't exist, we'll use a div instead
 
 const isOverdue = (dueDate) => {
   return new Date(dueDate) < new Date() && !isToday(new Date(dueDate));

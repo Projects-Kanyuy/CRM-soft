@@ -2,7 +2,7 @@ import { NavLink, useNavigate, Link } from 'react-router-dom';
 import { Menu, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import useAuthStore from '../store/authStore';
-import { ChartBarIcon, UsersIcon, BuildingOffice2Icon, BanknotesIcon, Cog6ToothIcon, ClipboardDocumentListIcon } from '@heroicons/react/24/outline';
+import { ChartBarIcon, UsersIcon, BuildingOffice2Icon, BanknotesIcon, Cog6ToothIcon } from '@heroicons/react/24/outline';
 import AdminOnly from './AdminOnly';
 
 const navigation = [
@@ -28,9 +28,9 @@ export default function Sidebar() {
         <h1 className="text-2xl font-bold text-white">StellarCRM</h1>
       </div>
       <nav className="flex flex-1 flex-col">
-        <ul role="list" className="flex flex-1 flex-col gap-y-7">
+        <ul  className="flex flex-1 flex-col gap-y-7">
           <li>
-            <ul role="list" className="-mx-2 space-y-1">
+            <ul className="-mx-2 space-y-1">
               {navigation.map((item) => (
                 <li key={item.name}>
                   <NavLink
