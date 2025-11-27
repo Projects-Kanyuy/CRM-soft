@@ -1,9 +1,9 @@
 import { useParams, Link } from 'react-router-dom';
-import { useEffect, useState, Fragment } from 'react';
+import { useEffect, useState } from 'react';
 import api from '../api';
 import toast from 'react-hot-toast';
 import { Tab } from '@headlessui/react';
-import { ArrowLeftIcon, BuildingOfficeIcon, EnvelopeIcon, PhoneIcon } from '@heroicons/react/24/outline';
+import {  BuildingOfficeIcon, EnvelopeIcon, PhoneIcon } from '@heroicons/react/24/outline';
 import Timeline from '../components/Timeline';
 import FileAttachments from '../components/FileAttachments';
 import RichTextEditor from '../components/RichTextEditor';
