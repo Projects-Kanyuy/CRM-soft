@@ -35,11 +35,11 @@ jobs:
         with:
           filters: |
             terraform:
-              - added|modified: 'terraform/**'
+              - 'terraform/**'
             backend:
-              - added|modified: 'backend/**'
+              - 'backend/**'
             frontend:
-              - added|modified: 'frontend/**'
+              - 'frontend/**'
 
   infrastructure:
     needs: changes
