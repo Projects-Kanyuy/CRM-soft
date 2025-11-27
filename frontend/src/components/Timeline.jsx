@@ -89,7 +89,7 @@ export default function Timeline({ contactId }) {
 
   return (
     <div className="flow-root">
-      <ul role="list" className="-mb-8 space-y-8">
+      <ul  className="-mb-8 space-y-8">
         {timelineItems.length > 0 ? (
           timelineItems.map((item, itemIdx) => (
             <li key={item.id}>

@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import api from '../api';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
-import { CheckCircleIcon } from '@heroicons/react/24/solid';
 import { CheckIcon } from '@heroicons/react/24/outline';
 
 const isOverdue = (dueDate) => new Date(dueDate) < new Date() && !isToday(new Date(dueDate));
